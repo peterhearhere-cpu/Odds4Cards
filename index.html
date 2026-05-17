@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Player's Companion</title>
+    <style>
+        /* The Casino Felt Background */
+        body {
+            background-color: #0B6623; /* Classic vibrant felt green */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #222;
+            padding: 20px;
+            margin: 0;
+        }
+
+        /* The Reference Cards */
+        .reference-card {
+            background-color: #ffffff;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 0 auto 25px auto;
+            max-width: 600px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #0B6623;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            text-align: center;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Subtle Green Zebra Striping */
+        tr:nth-child(even) {
+            background-color: #f2fcf2; 
+        }
+
+        /* Color Coding for Odds */
+        .safe { color: #0B6623; font-weight: bold; } /* Green for good odds */
+        .risky { color: #d9534f; font-weight: bold; } /* Red for bad odds */
+        .neutral { color: #5bc0de; font-weight: bold; } /* Blue for middle ground */
+
+    </style>
+</head>
+<body>
+
+    <!-- Acey-Deucey Reference Card -->
+    <div class="reference-card">
+        <h2>Acey-Deucey Odds</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Spread (Cards Between)</th>
+                    <th>Winning Cards</th>
+                    <th>Probability of Winning</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1 (e.g., 5 & 7)</td>
+                    <td>4</td>
+                    <td class="risky">8%</td>
+                </tr>
+                <tr>
+                    <td>2 (e.g., 5 & 8)</td>
+                    <td>8</td>
+                    <td class="risky">16%</td>
+                </tr>
+                <tr>
+                    <td>3 (e.g., 5 & 9)</td>
+                    <td>12</td>
+                    <td class="risky">24%</td>
+                </tr>
+                <tr>
+                    <td>4 (e.g., 5 & 10)</td>
+                    <td>16</td>
+                    <td class="risky">32%</td>
+                </tr>
+                <tr>
+                    <td>5 (e.g., 5 & Jack)</td>
+                    <td>20</td>
+                    <td class="neutral">40%</td>
+                </tr>
+                <tr>
+                    <td>6 (e.g., 5 & Queen)</td>
+                    <td>24</td>
+                    <td class="neutral">48%</td>
+                </tr>
+                <tr>
+                    <td>7 (e.g., 5 & King)</td>
+                    <td>28</td>
+                    <td class="safe">56%</td>
+                </tr>
+                <tr>
+                    <td>8 (e.g., 4 & King)</td>
+                    <td>32</td>
+                    <td class="safe">64%</td>
+                </tr>
+                <tr>
+                    <td>9 (e.g., 3 & King)</td>
+                    <td>36</td>
+                    <td class="safe">72%</td>
+                </tr>
+                <tr>
+                    <td>10 (e.g., 2 & King)</td>
+                    <td>40</td>
+                    <td class="safe">80%</td>
+                </tr>
+                <tr>
+                    <td>11 (2 & Ace)</td>
+                    <td>44</td>
+                    <td class="safe">88%</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Blackjack Reference Card -->
+    <div class="reference-card">
+        <h2>Blackjack: House Rules Strategy</h2>
+        <p style="text-align: center; font-size: 0.9em; color: #555;">
+            <strong>Rules in effect:</strong> Cannot stand below 16. Free flip allowed at 12+. Split 10s and Aces only.
+        </p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Your Hand</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>11 or under</td>
+                    <td class="safe">Hit (0% Bust Risk)</td>
+                </tr>
+                <tr>
+                    <td>12, 13, 14, 15</td>
+                    <td class="neutral">Ask for Free Flip</td>
+                </tr>
+                <tr>
+                    <td>16</td>
+                    <td>Stand (62% Bust Risk if Hit)</td>
+                </tr>
+                <tr>
+                    <td>17 to 20</td>
+                    <td>Stand</td>
+                </tr>
+                <tr>
+                    <td>Pair of Aces</td>
+                    <td class="safe">Always Split</td>
+                </tr>
+                <tr>
+                    <td>Pair of 10-Value Cards</td>
+                    <td class="risky">Do Not Split (Keep the 20!)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
