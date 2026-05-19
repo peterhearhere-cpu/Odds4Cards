@@ -51,7 +51,6 @@
             overflow-x: auto;
             gap: 10px;
             padding: 10px;
-            /* Hide scrollbars for a cleaner look */
             scrollbar-width: none; 
             -ms-overflow-style: none;
         }
@@ -121,12 +120,7 @@
             font-size: 0.95em;
         }
 
-        th {
-            background-color: #f4f4f4;
-            font-weight: bold;
-            color: #333;
-        }
-
+        th { background-color: #f4f4f4; font-weight: bold; color: #333; }
         tr:nth-child(even) { background-color: #f9f9f9; }
 
         /* Color Coding */
@@ -141,23 +135,46 @@
 </head>
 <body>
 
-    <!-- Acey-Deucey Interactive Card -->
     <div class="reference-card">
         <h2>Acey-Deucey Calculator</h2>
         
         <div class="calculator-area">
             <div class="row-label">Card 1:</div>
             <div class="card-row" id="row1">
-                <!-- Javascript will populate these buttons -->
+                <button class="card-btn selected" onclick="selectCard(1, 2, this)">2</button>
+                <button class="card-btn" onclick="selectCard(1, 3, this)">3</button>
+                <button class="card-btn" onclick="selectCard(1, 4, this)">4</button>
+                <button class="card-btn" onclick="selectCard(1, 5, this)">5</button>
+                <button class="card-btn" onclick="selectCard(1, 6, this)">6</button>
+                <button class="card-btn" onclick="selectCard(1, 7, this)">7</button>
+                <button class="card-btn" onclick="selectCard(1, 8, this)">8</button>
+                <button class="card-btn" onclick="selectCard(1, 9, this)">9</button>
+                <button class="card-btn" onclick="selectCard(1, 10, this)">10</button>
+                <button class="card-btn" onclick="selectCard(1, 11, this)">J</button>
+                <button class="card-btn" onclick="selectCard(1, 12, this)">Q</button>
+                <button class="card-btn" onclick="selectCard(1, 13, this)">K</button>
+                <button class="card-btn" onclick="selectCard(1, 14, this)">A</button>
             </div>
 
             <div class="row-label" style="margin-top: 15px;">Card 2:</div>
             <div class="card-row" id="row2">
-                <!-- Javascript will populate these buttons -->
+                <button class="card-btn" onclick="selectCard(2, 2, this)">2</button>
+                <button class="card-btn" onclick="selectCard(2, 3, this)">3</button>
+                <button class="card-btn" onclick="selectCard(2, 4, this)">4</button>
+                <button class="card-btn" onclick="selectCard(2, 5, this)">5</button>
+                <button class="card-btn" onclick="selectCard(2, 6, this)">6</button>
+                <button class="card-btn" onclick="selectCard(2, 7, this)">7</button>
+                <button class="card-btn" onclick="selectCard(2, 8, this)">8</button>
+                <button class="card-btn" onclick="selectCard(2, 9, this)">9</button>
+                <button class="card-btn" onclick="selectCard(2, 10, this)">10</button>
+                <button class="card-btn" onclick="selectCard(2, 11, this)">J</button>
+                <button class="card-btn" onclick="selectCard(2, 12, this)">Q</button>
+                <button class="card-btn" onclick="selectCard(2, 13, this)">K</button>
+                <button class="card-btn selected" onclick="selectCard(2, 14, this)">A</button>
             </div>
 
             <div id="odds-result" class="result-display safe">
-                Select your cards above!
+                Spread: 11 cards<br>Winning Chance: <strong>88%</strong>
             </div>
         </div>
 
@@ -189,7 +206,6 @@
         </div>
     </div>
 
-    <!-- 21 / Blackjack Reference Card -->
     <div class="reference-card">
         <h2>21: House Rules Strategy</h2>
         <div style="background-color: #fef9e7; padding: 10px; border-radius: 5px; margin-bottom: 15px; font-size: 0.9em; border-left: 4px solid #f0ad4e;">
@@ -247,40 +263,8 @@
     </div>
 
     <script>
-        const cardValues = [
-            { label: '2', val: 2 }, { label: '3', val: 3 }, { label: '4', val: 4 },
-            { label: '5', val: 5 }, { label: '6', val: 6 }, { label: '7', val: 7 },
-            { label: '8', val: 8 }, { label: '9', val: 9 }, { label: '10', val: 10 },
-            { label: 'J', val: 11 }, { label: 'Q', val: 12 }, { label: 'K', val: 13 },
-            { label: 'A', val: 14 }
-        ];
-
-        let selectedCard1 = 2; // Default to 2
-        let selectedCard2 = 14; // Default to Ace
-
-        // Initialize the card rows
-        function buildRows() {
-            const row1 = document.getElementById('row1');
-            const row2 = document.getElementById('row2');
-
-            cardValues.forEach(card => {
-                // Button for Row 1
-                let btn1 = document.createElement('button');
-                btn1.className = 'card-btn' + (card.val === selectedCard1 ? ' selected' : '');
-                btn1.innerText = card.label;
-                btn1.onclick = () => selectCard(1, card.val, btn1);
-                row1.appendChild(btn1);
-
-                // Button for Row 2
-                let btn2 = document.createElement('button');
-                btn2.className = 'card-btn' + (card.val === selectedCard2 ? ' selected' : '');
-                btn2.innerText = card.label;
-                btn2.onclick = () => selectCard(2, card.val, btn2);
-                row2.appendChild(btn2);
-            });
-            
-            calculateOdds();
-        }
+        let selectedCard1 = 2; 
+        let selectedCard2 = 14; 
 
         // Handle card selection
         function selectCard(rowNum, value, clickedBtn) {
@@ -334,88 +318,11 @@
                 btn.innerText = 'Show Complete Table';
             }
         }
-
-        // Build UI on load
-        window.onload = buildRows;
     </script>
 
-</body>
-</html>                    <td>11 or under</td>
-                    <td class="safe">Hit (0% Bust Risk)</td>
-                </tr>
-                <tr>
-                    <td>12, 13, 14, 15</td>
-                    <td class="neutral">Ask for Free Flip</td>
-                </tr>
-                <tr>
-                    <td><strong>16 (2 or 3 Cards)</strong></td>
-                    <td>Stand</td>
-                </tr>
-                <tr>
-                    <td><strong>16 (4 Cards)</strong></td>
-                    <td class="safe"><strong>Hit!</strong> (Chase the 5-card double)</td>
-                </tr>
-                <tr>
-                    <td>17 to 20</td>
-                    <td>Stand</td>
-                </tr>
-                <tr>
-                    <td>Pair of Aces</td>
-                    <td class="safe">Always Split</td>
-                </tr>
-                <tr>
-                    <td>Pair of 10s/Faces</td>
-                    <td class="risky">Do Not Split (Keep the 20)</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <script>
-        // Calculate Acey Deucey Odds dynamically
-        function calculateOdds() {
-            const card1 = parseInt(document.getElementById('card1').value);
-            const card2 = parseInt(document.getElementById('card2').value);
-            
-            // Calculate the gap between the two cards
-            let spread = Math.abs(card1 - card2) - 1;
-            
-            // If cards are the same, spread is 0
-            if (spread < 0) spread = 0; 
-
-            // 4 outs per gap card, out of 50 remaining cards
-            const percentage = ((spread * 4) / 50) * 100;
-
-            const resultDiv = document.getElementById('odds-result');
-            resultDiv.innerHTML = `Spread: ${spread} cards<br>Winning Chance: <strong>${Math.round(percentage)}%</strong>`;
-
-            // Update color based on risk
-            if (percentage >= 50) {
-                resultDiv.className = 'result-display safe';
-            } else if (percentage >= 40) {
-                resultDiv.className = 'result-display neutral';
-            } else {
-                resultDiv.className = 'result-display risky';
-            }
-        }
-
-        // Toggle the full table visibility
-        function toggleTable() {
-            const tableContainer = document.getElementById('acey-table-container');
-            const btn = document.getElementById('toggle-btn');
-
-            if (tableContainer.style.display === 'none' || tableContainer.style.display === '') {
-                tableContainer.style.display = 'block';
-                btn.innerText = 'Hide Complete Table';
-            } else {
-                tableContainer.style.display = 'none';
-                btn.innerText = 'Show Complete Table';
-            }
-        }
-
-        // Run calculation once on load to set initial state
-        window.onload = calculateOdds;
-    </script>
+    <p style="text-align: center; color: #a9dfbf; font-size: 0.8em; margin-bottom: 20px;">
+        Version 3.1
+    </p>
 
 </body>
 </html>
