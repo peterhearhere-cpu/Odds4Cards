@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Card Player's Companion</title>
     <style>
         /* The Casino Felt Background */
@@ -10,7 +10,7 @@
             background-color: #0B6623;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #222;
-            padding: 20px;
+            padding: 15px;
             margin: 0;
         }
 
@@ -32,45 +32,79 @@
             text-align: center;
         }
 
-        /* Interactive Calculator Styling */
+        /* Swipeable Card Row UI */
         .calculator-area {
-            text-align: center;
             padding: 15px 0;
             background-color: #f2fcf2;
             border-radius: 10px;
             margin-bottom: 15px;
         }
 
-        select {
-            font-size: 1.1em;
-            padding: 8px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            margin: 0 5px;
-            background-color: #fff;
+        .row-label {
+            font-weight: bold;
+            margin-left: 10px;
+            color: #333;
+        }
+
+        .card-row {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            padding: 10px;
+            /* Hide scrollbars for a cleaner look */
+            scrollbar-width: none; 
+            -ms-overflow-style: none;
+        }
+        
+        .card-row::-webkit-scrollbar {
+            display: none;
+        }
+
+        .card-btn {
+            flex: 0 0 auto;
+            width: 50px;
+            height: 70px;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            background-color: white;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #444;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .card-btn.selected {
+            border-color: #0B6623;
+            background-color: #e6f9ec;
+            color: #0B6623;
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(11, 102, 35, 0.3);
         }
 
         .result-display {
             font-size: 1.4em;
             margin-top: 15px;
             padding: 10px;
+            text-align: center;
         }
 
         /* Buttons */
-        button {
+        .action-btn {
             background-color: #0B6623;
             color: white;
             border: none;
-            padding: 10px 20px;
-            font-size: 1em;
+            padding: 12px 20px;
+            font-size: 1.1em;
             border-radius: 8px;
             cursor: pointer;
             width: 100%;
             margin-top: 10px;
-        }
-
-        button:active {
-            background-color: #084c1a;
         }
 
         /* Table Styling */
@@ -93,18 +127,15 @@
             color: #333;
         }
 
-        tr:nth-child(even) {
-            background-color: #f9f9f9; 
-        }
+        tr:nth-child(even) { background-color: #f9f9f9; }
 
-        /* Color Coding for Odds */
+        /* Color Coding */
         .safe { color: #0B6623; font-weight: bold; } 
         .risky { color: #d9534f; font-weight: bold; } 
         .neutral { color: #f0ad4e; font-weight: bold; } 
+        .jackpot { color: #8e44ad; font-weight: bold; }
         
-        #acey-table-container {
-            display: none; /* Hidden by default */
-        }
+        #acey-table-container { display: none; }
 
     </style>
 </head>
@@ -115,34 +146,22 @@
         <h2>Acey-Deucey Calculator</h2>
         
         <div class="calculator-area">
-            <label for="card1">Card 1:</label>
-            <select id="card1" onchange="calculateOdds()">
-                <option value="2">2</option><option value="3">3</option>
-                <option value="4">4</option><option value="5">5</option>
-                <option value="6">6</option><option value="7">7</option>
-                <option value="8">8</option><option value="9">9</option>
-                <option value="10">10</option><option value="11">Jack</option>
-                <option value="12">Queen</option><option value="13">King</option>
-                <option value="14" selected>Ace</option>
-            </select>
+            <div class="row-label">Card 1:</div>
+            <div class="card-row" id="row1">
+                <!-- Javascript will populate these buttons -->
+            </div>
 
-            <label for="card2">Card 2:</label>
-            <select id="card2" onchange="calculateOdds()">
-                <option value="2" selected>2</option><option value="3">3</option>
-                <option value="4">4</option><option value="5">5</option>
-                <option value="6">6</option><option value="7">7</option>
-                <option value="8">8</option><option value="9">9</option>
-                <option value="10">10</option><option value="11">Jack</option>
-                <option value="12">Queen</option><option value="13">King</option>
-                <option value="14">Ace</option>
-            </select>
+            <div class="row-label" style="margin-top: 15px;">Card 2:</div>
+            <div class="card-row" id="row2">
+                <!-- Javascript will populate these buttons -->
+            </div>
 
             <div id="odds-result" class="result-display safe">
-                Spread: 11 cards<br>Winning Chance: <strong>88%</strong>
+                Select your cards above!
             </div>
         </div>
 
-        <button id="toggle-btn" onclick="toggleTable()">Show Complete Table</button>
+        <button class="action-btn" id="toggle-btn" onclick="toggleTable()">Show Complete Table</button>
 
         <div id="acey-table-container">
             <table>
@@ -176,6 +195,7 @@
         <div style="background-color: #fef9e7; padding: 10px; border-radius: 5px; margin-bottom: 15px; font-size: 0.9em; border-left: 4px solid #f0ad4e;">
             <strong>House Payout Rules:</strong>
             <ul style="margin: 5px 0 0 0; padding-left: 20px;">
+                <li><strong>Triple 7s:</strong> Pays Triple!</li>
                 <li><strong>Natural (10 + Ace):</strong> Pays Double & Takes the Bank.</li>
                 <li><strong>5-Card Trick:</strong> 5 cards without busting Pays Double.</li>
                 <li><strong>Free Flip:</strong> Allowed at 12+.</li>
@@ -192,6 +212,135 @@
             <tbody>
                 <tr>
                     <td>11 or under</td>
+                    <td class="safe">Hit (0% Bust Risk)</td>
+                </tr>
+                <tr>
+                    <td>12, 13, 15</td>
+                    <td class="neutral">Ask for Free Flip</td>
+                </tr>
+                <tr>
+                    <td><strong>Pair of 7s (14)</strong></td>
+                    <td class="jackpot">Free Flip (Pray for Triple 7!)</td>
+                </tr>
+                <tr>
+                    <td><strong>16 (2 or 3 Cards)</strong></td>
+                    <td>Stand</td>
+                </tr>
+                <tr>
+                    <td><strong>16 (4 Cards)</strong></td>
+                    <td class="safe"><strong>Hit!</strong> (Chase the 5-card double)</td>
+                </tr>
+                <tr>
+                    <td>17 to 20</td>
+                    <td>Stand</td>
+                </tr>
+                <tr>
+                    <td>Pair of Aces</td>
+                    <td class="safe">Always Split</td>
+                </tr>
+                <tr>
+                    <td>Pair of 10s/Faces</td>
+                    <td class="risky">Do Not Split (Keep the 20)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const cardValues = [
+            { label: '2', val: 2 }, { label: '3', val: 3 }, { label: '4', val: 4 },
+            { label: '5', val: 5 }, { label: '6', val: 6 }, { label: '7', val: 7 },
+            { label: '8', val: 8 }, { label: '9', val: 9 }, { label: '10', val: 10 },
+            { label: 'J', val: 11 }, { label: 'Q', val: 12 }, { label: 'K', val: 13 },
+            { label: 'A', val: 14 }
+        ];
+
+        let selectedCard1 = 2; // Default to 2
+        let selectedCard2 = 14; // Default to Ace
+
+        // Initialize the card rows
+        function buildRows() {
+            const row1 = document.getElementById('row1');
+            const row2 = document.getElementById('row2');
+
+            cardValues.forEach(card => {
+                // Button for Row 1
+                let btn1 = document.createElement('button');
+                btn1.className = 'card-btn' + (card.val === selectedCard1 ? ' selected' : '');
+                btn1.innerText = card.label;
+                btn1.onclick = () => selectCard(1, card.val, btn1);
+                row1.appendChild(btn1);
+
+                // Button for Row 2
+                let btn2 = document.createElement('button');
+                btn2.className = 'card-btn' + (card.val === selectedCard2 ? ' selected' : '');
+                btn2.innerText = card.label;
+                btn2.onclick = () => selectCard(2, card.val, btn2);
+                row2.appendChild(btn2);
+            });
+            
+            calculateOdds();
+        }
+
+        // Handle card selection
+        function selectCard(rowNum, value, clickedBtn) {
+            // Update the variable
+            if (rowNum === 1) selectedCard1 = value;
+            if (rowNum === 2) selectedCard2 = value;
+
+            // Remove 'selected' class from all buttons in this row
+            const row = document.getElementById('row' + rowNum);
+            const buttons = row.getElementsByClassName('card-btn');
+            for (let btn of buttons) {
+                btn.classList.remove('selected');
+            }
+
+            // Add 'selected' to the clicked button
+            clickedBtn.classList.add('selected');
+
+            // Recalculate
+            calculateOdds();
+        }
+
+        // Calculate Acey Deucey Odds dynamically
+        function calculateOdds() {
+            let spread = Math.abs(selectedCard1 - selectedCard2) - 1;
+            if (spread < 0) spread = 0; 
+
+            const percentage = ((spread * 4) / 50) * 100;
+            const resultDiv = document.getElementById('odds-result');
+            
+            resultDiv.innerHTML = `Spread: ${spread} cards<br>Winning Chance: <strong>${Math.round(percentage)}%</strong>`;
+
+            if (percentage >= 50) {
+                resultDiv.className = 'result-display safe';
+            } else if (percentage >= 40) {
+                resultDiv.className = 'result-display neutral';
+            } else {
+                resultDiv.className = 'result-display risky';
+            }
+        }
+
+        // Toggle the full table visibility
+        function toggleTable() {
+            const tableContainer = document.getElementById('acey-table-container');
+            const btn = document.getElementById('toggle-btn');
+
+            if (tableContainer.style.display === 'none' || tableContainer.style.display === '') {
+                tableContainer.style.display = 'block';
+                btn.innerText = 'Hide Complete Table';
+            } else {
+                tableContainer.style.display = 'none';
+                btn.innerText = 'Show Complete Table';
+            }
+        }
+
+        // Build UI on load
+        window.onload = buildRows;
+    </script>
+
+</body>
+</html>                    <td>11 or under</td>
                     <td class="safe">Hit (0% Bust Risk)</td>
                 </tr>
                 <tr>
